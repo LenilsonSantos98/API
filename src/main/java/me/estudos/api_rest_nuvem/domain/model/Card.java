@@ -2,10 +2,23 @@ package me.estudos.api_rest_nuvem.domain.model;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity(name = "tb_card")
 public class Card {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
     private String number;
+    
+    @Column(scale=13, precision= 2)
     private BigDecimal limit;
     
     //Getters and Setters
