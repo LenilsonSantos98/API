@@ -2,13 +2,35 @@ package me.estudos.api_rest_nuvem.domain.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+
+@Entity(name = "tb_user") //Declarando que a classe é uma entidade JPA.
 public class User {
     
+    @Id //para que o id seja identificador de fato.
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // gerar o valor automaticamente do id.
+
     private Long id; // atributo adicional, será adicionado em todas as classes.
+    
     private String name;
+    
+    @OneToOne(cascade= CascadeType.ALL)
     private Account account;
+    
+    @OneToOne(cascade= CascadeType.ALL)
     private Card card;
+    
+    @OneToMany(cascade= CascadeType.ALL, fetch= FetchType.EAGER)
     private List<Feature> features;
+    
+    @OneToMany(cascade= CascadeType.ALL, fetch= FetchType.EAGER)
     private List<News> news;
 
     //  Getters and Setters 
