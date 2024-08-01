@@ -23,7 +23,7 @@ public class Account {
     @Column(nullable = false, scale=13, precision= 2)
     private BigDecimal balance;
     
-    @Column(nullable = false, scale=13, precision= 2)
+    @Column(name = "additional_limit", nullable = false, scale=13, precision= 2)
     private BigDecimal limit;
     
     //Getters and Setters

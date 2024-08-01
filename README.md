@@ -245,3 +245,49 @@ Neste exemplo:
 - O uso de `CascadeType.ALL` em `Departamento` garante que operações realizadas em uma instância de `Departamento` (como persistir, atualizar ou remover) sejam automaticamente propagadas para as instâncias relacionadas de `Funcionario`.
 
 Com essa configuração, você pode adicionar funcionários a um departamento e JPA cuidará de manter o relacionamento correto no banco de dados.
+
+## Informações adicionais: `@MappedSuperclass`
+
+ é uma anotação em Java usada na JPA (Java Persistence API) para designar uma classe cujas propriedades são herdadas por entidades, mas a própria classe não será mapeada para uma tabela no banco de dados. Em outras palavras, uma classe anotada com `@MappedSuperclass` serve como uma classe base que define propriedades comuns para outras entidades, mas não é uma entidade persistente por si só.
+
+Aqui está um exemplo de como usar `@MappedSuperclass`:
+
+```java
+import javax.persistence.*;
+
+@MappedSuperclass
+public abstract class BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String createdBy;
+    private String updatedBy;
+
+    // getters e setters
+}
+
+@Entity
+public class Usuario extends BaseEntity {
+    private String nome;
+    private String email;
+
+    // getters e setters
+}
+
+@Entity
+public class Produto extends BaseEntity {
+    private String nome;
+    private double preco;
+
+    // getters e setters
+}
+```
+
+Neste exemplo:
+
+- A classe `BaseEntity` é anotada com `@MappedSuperclass`, indicando que suas propriedades (`id`, `createdBy`, `updatedBy`) serão herdadas por suas subclasses, mas `BaseEntity` não será mapeada para uma tabela no banco de dados.
+- As classes `Usuario` e `Produto` são entidades que herdam de `BaseEntity`. Ambas terão as propriedades `id`, `createdBy` e `updatedBy`, além de suas próprias propriedades (`nome` e `email` para `Usuario`, `nome` e `preco` para `Produto`).
+- `Usuario` e `Produto` serão mapeadas para tabelas no banco de dados e terão colunas correspondentes às propriedades herdadas de `BaseEntity`.
+
+Usar `@MappedSuperclass` é útil quando você tem propriedades comuns que deseja compartilhar entre várias entidades sem duplicar o código em cada uma delas.
